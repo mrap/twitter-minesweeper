@@ -46,13 +46,31 @@ var reachedFollowingLimit = function($){
   return followingCount >= Math.max(followersCount*1.1, FOLLOWING_LIMIT);
 };
 
+var userBio = function($){
+  return isNewLayout($) ?
+    $('p.ProfileHeaderCard-bio').text() :
+    $('p.bio').text();
+};
+
+var userUrl = function($){
+  return isNewLayout($) ?
+    $('span.ProfileHeaderCard-urlText').find('a').attr('href') :
+    $('p.location-and-url').find('span.url').find('a').attr('href');
+};
+
+var lacksBioAndUrl = function($){
+  return !userBio($) && !userUrl($);
+};
 var Minesweeper = {
   userProfileUrl: userProfileUrl,
 
   isUserFake: function(username, done){
     loadUserProfileDom(username, function(err, $){
       if (err) return done(err, null);
-      var result = hasEggheadProfilePhoto($) || reachedFollowingLimit($);
+      var result =
+        hasEggheadProfilePhoto($) ||
+        reachedFollowingLimit($)  ||
+        lacksBioAndUrl($);
       done(null, result);
     });
   }
