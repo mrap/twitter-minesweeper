@@ -1,0 +1,36 @@
+{
+  "name": "twitter-minesweeper",
+  "version": "0.0.1",
+  "description": "Detect fake/inactive/lazy users on twitter.",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "cheerio": "^0.16.0",
+    "request": "^2.36.0",
+    "chai": "^1.9.1"
+  },
+  "devDependencies": {
+    "mocha": "^1.19.0"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mrap/twitter-minesweeper.git"
+  },
+  "keywords": [
+    "twitter",
+    "fake",
+    "users"
+  ],
+  "author": "Mike Rapadas <mike@mrap.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrap/twitter-minesweeper/issues"
+  },
+  "homepage": "https://github.com/mrap/twitter-minesweeper"
+}
