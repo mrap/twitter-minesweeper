@@ -5,7 +5,26 @@ var chai        = require('chai')
   , minesweeper = require('../minesweeper');
 
 describe('Minesweeper Tests', function(){
+  this.timeout(5000);
   describe('#isUserFake', function(){
+
+    describe('non-fake user', function(){
+      it('should return false for user with old layout', function(done){
+        minesweeper.isUserFake('the_mrap', function(err, res){
+          if (err) return done(err);
+          expect(res).to.be.false;
+          done();
+        });
+      });
+
+      it('should return false for user with new layout', function(done){
+        minesweeper.isUserFake('johnenriquez', function(err, res){
+          if (err) return done(err);
+          expect(res).to.be.false;
+          done();
+        });
+      });
+    });
 
     describe('user with egghead photo', function(){
       it('should work for old twitter layout', function(done){
@@ -47,7 +66,6 @@ describe('Minesweeper Tests', function(){
     });
 
     describe('user without bio or url', function(){
-      this.timeout(5000);
       it('should work for old layout', function(done){
         minesweeper.isUserFake('ansarabbasi2', function(err, res){
           if (err) return done(err);
