@@ -24,5 +24,15 @@ describe('Minesweeper Tests', function(){
         });
       });
     });
+
+    describe('user following 2001 users (following limit)', function(){
+      it('should work for new layout', function(done){
+        minesweeper.isUserFake('ednilsonsb', function(err, res){
+          if (err) return done(err);
+          expect(res).to.be.true;
+          done();
+        });
+      });
+    });
   });
 });

@@ -7,7 +7,7 @@ var request = require('request')
 var userProfileUrl = function(username) { return BASE_URL + username; };
 
 var isNewLayout = function($){
-  return $.contains( $.root(), $('.Grid') );
+  return $('.Grid').length > 0;
 };
 
 var loadUserProfileDom = function(username, done){
@@ -26,13 +26,33 @@ var hasEggheadProfilePhoto = function($){
   return eggheadExp.test(profileUrl);
 };
 
+var connectionCount = function($, connectionType){
+  if ( isNewLayout($) ) {
+    var count = $('a.ProfileNav-stat[data-nav="'+connectionType+'"]').attr('title');
+  } else {
+    var tableDataElems = $('table.stats').find('td')
+      , pos            = (connectionType === 'following') ? 1 : 2
+      , count          = $(tableDataElems[pos]).find('strong').attr('title') || 0;
+  }
+  // count => "1000 Followers"
+  // remove non-digits and converts to number
+  return Number( count.toString().replace(/[^\d.]/g, "") );
+};
+
+var FOLLOWING_LIMIT = 2001;
+var reachedFollowingLimit = function($){
+  var followersCount = connectionCount($, 'followers')
+    , followingCount = connectionCount($, 'following');
+  return followingCount >= Math.max(followersCount*1.1, FOLLOWING_LIMIT);
+};
+
 var Minesweeper = {
   userProfileUrl: userProfileUrl,
 
   isUserFake: function(username, done){
     loadUserProfileDom(username, function(err, $){
       if (err) return done(err, null);
-      var result = hasEggheadProfilePhoto($);
+      var result = hasEggheadProfilePhoto($) || reachedFollowingLimit($);
       done(null, result);
     });
   }
