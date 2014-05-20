@@ -22,6 +22,15 @@ var server = http.createServer(function(req, res){
     }));
   };
 
+  if (url.length === 1){
+    res.writeHead(200, {"Content-Type": "application/json"});
+    res.end(JSON.stringify({
+      username: null,
+      is_fake: null,
+      error: "Need a username to check! Like this: http://twitter-minesweeper.herokuapp.com/:username"
+    }));
+  }
+
   if (!isValidTwitterUsername(username))
     return respondWithError(username+" is not a valid Twitter username");
 
