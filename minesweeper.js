@@ -7,7 +7,7 @@ var request = require('request')
 var userProfileUrl = function(username) { return BASE_URL + username; };
 
 var isNewLayout = function($){
-  return $('.Grid').length > 0;
+  return $.contains( $.root(), $('.Grid') );
 };
 
 var loadUserProfileDom = function(username, done){
