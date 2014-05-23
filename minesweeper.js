@@ -36,6 +36,7 @@ var connectionCount = function($, connectionType){
   }
   // count => "1000 Followers"
   // remove non-digits and converts to number
+  if (!count) count = 0;
   return Number( count.toString().replace(/[^\d.]/g, "") );
 };
 
