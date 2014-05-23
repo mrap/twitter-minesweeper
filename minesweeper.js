@@ -61,12 +61,21 @@ var userUrl = function($){
 var lacksBioAndUrl = function($){
   return !userBio($) && !userUrl($);
 };
+
+var isUserVerified = function($){
+  if (isNewLayout($)) return $('span.ProfileHeaderCard-badges').find('.Icon--verified').length > 0;
+  else                return $('h1.fullname').find('.verified').length > 0;
+};
+
 var Minesweeper = {
   userProfileUrl: userProfileUrl,
 
   isUserFake: function(username, done){
     loadUserProfileDom(username, function(err, $){
       if (err) return done(err, null);
+
+      // Verified users are not fake
+      if (isUserVerified($)) return done(null, false)
       var result =
         hasEggheadProfilePhoto($) ||
         reachedFollowingLimit($)  ||

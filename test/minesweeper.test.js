@@ -24,6 +24,14 @@ describe('Minesweeper Tests', function(){
           done();
         });
       });
+
+      it('should return false if the user is verified', function(done){
+        minesweeper.isUserFake('jack', function(err, res){
+          if (err) return done(err);
+          expect(res).to.be.false;
+          done();
+        });
+      });
     });
 
     describe('user with egghead photo', function(){
